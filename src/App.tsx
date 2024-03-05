@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import './App.css'
 import { Canvas } from './Components/Canvas/Canvas'
-import { CenteredComponent } from './Components/CenteredComponent/CenteredComponent'
 import { Sprite } from './Components/Sprite/Sprite'
 import reactImg from './assets/react.svg'
 

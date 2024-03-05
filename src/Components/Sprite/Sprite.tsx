@@ -1,5 +1,4 @@
-import React, { KeyboardEventHandler, useEffect, useRef, useState } from "react";
-import { CanvasContext } from "../Canvas/canvasProvider";
+import React, { useEffect, useRef, useState } from "react";
 type SpriteProps = {
   image: {
     src: string,
@@ -22,11 +21,12 @@ export function Sprite(props: SpriteProps){
 
   const [topPosition, setTop] = useState(0);
   const [topInterval, setTopInterval] = useState<number>();
+
   const [leftPosition, setLeft] = useState(0-image.width);
   const [leftInterval, setLeftInterval] = useState<number>();
+
   const [verticalKeyPressed, setVerticalKeyPressed] = useState(false);
   const [horizontalKeyPressed, setHorizontalKeyPressed] = useState(false);
-
 
   const defaultSpeed = 1
 
@@ -42,8 +42,6 @@ export function Sprite(props: SpriteProps){
   const moveLeft = (num?: number) => {
     setLeft(leftPosition => leftPosition - (num || defaultSpeed))
   }
-
-
 
   const startMovement = (e: React.KeyboardEvent) =>{
     const character = e.key.toLowerCase();
@@ -72,11 +70,9 @@ export function Sprite(props: SpriteProps){
       setHorizontalKeyPressed(true)
     }
   }
-
   const stopMovement = (e: React.KeyboardEvent) => {
     const character = e.key.toLowerCase();
     if(character === keys.up){
-      console.log('stopInterval')
       clearInterval(topInterval)
       setVerticalKeyPressed(false)
     }
@@ -102,22 +98,17 @@ export function Sprite(props: SpriteProps){
   },[])
 
   return (
-    <CanvasContext.Consumer>
-      {value => (
-        <div 
-          id="sprite" 
-          className="sprite" 
-          tabIndex={-1} 
-          style={{'position': 'absolute', 'top': `calc(50% + ${topPosition}px)`, 'left': `calc(50% + ${leftPosition}px`, zIndex: '99'}} 
-          ref={spriteRef as React.RefObject<HTMLDivElement>}
-          onKeyDown={startMovement}
-          onKeyUp={stopMovement}
-          onBlur={()=>spriteRef.current?.focus()}
-        >
-          <img src={image.src} height={image.height} width={image.width} alt="sprite" />
-        </div>
-      )}
-      
-    </CanvasContext.Consumer>
+    <div 
+      id="sprite" 
+      className="sprite" 
+      tabIndex={-1} 
+      style={{'position': 'absolute', 'top': `calc(50% + ${topPosition}px)`, 'left': `calc(50% + ${leftPosition}px`, zIndex: '99'}} 
+      ref={spriteRef as React.RefObject<HTMLDivElement>}
+      onKeyDown={startMovement}
+      onKeyUp={stopMovement}
+      onBlur={()=>spriteRef.current?.focus()}
+    >
+      <img src={image.src} height={image.height} width={image.width} alt="sprite" />
+    </div>
   )
 }
