@@ -33,7 +33,7 @@ export function Sprite(props: SpriteProps) {
   const defaultSpeed = 1;
 
   const borderCheck = (borderValue: number, spritePosition: number) => {
-    return borderValue === spritePosition;
+    return Math.ceil(borderValue) === spritePosition;
   };
 
   const verticalBorderSpriteFix = image.height / 2;
