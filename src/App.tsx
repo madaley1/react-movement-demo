@@ -5,7 +5,7 @@ import reactImg from './assets/react.svg'
 
 function App() {
   return (
-    <Canvas h={750} w={750}>
+    <Canvas h={500} w={500}>
       {/* <CenteredComponent /> */}
       <Sprite
         image={{

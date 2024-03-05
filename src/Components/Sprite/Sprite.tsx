@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { CanvasContext } from "../Canvas/canvasProvider";
 type SpriteProps = {
   image: {
     src: string,
@@ -30,43 +31,58 @@ export function Sprite(props: SpriteProps){
 
   const defaultSpeed = 1
 
-  const moveUp = (num?: number) => {
-    setTop(topPosition => topPosition - (num || defaultSpeed))
-  }
-  const moveRight = (num?: number) => {
-    setLeft(leftPosition => leftPosition + (num || defaultSpeed))
-  }
-  const moveDown = (num?: number) => {
-    setTop(topPosition => topPosition + (num || defaultSpeed))
-  }
-  const moveLeft = (num?: number) => {
-    setLeft(leftPosition => leftPosition - (num || defaultSpeed))
+  const borderCheck = (borderValue: number, spritePosition: number)=>{
+    return borderValue === spritePosition
   }
 
-  const startMovement = (e: React.KeyboardEvent) =>{
+  const moveUp = (border: number, speed?: number) => {
+    setTop(topPosition => {
+      const requestedPosition = topPosition - (speed || defaultSpeed)
+      return borderCheck(-(border+(image.height/2)), requestedPosition) ? topPosition : requestedPosition
+    })
+  }
+  const moveRight = (border: number, speed?: number) => {
+    setLeft(leftPosition => {
+      const requestedPosition = leftPosition + (speed || defaultSpeed)
+      return borderCheck(border-(image.width/2), requestedPosition) ? leftPosition : requestedPosition
+    })
+  }
+  const moveDown = (border: number, speed?: number) => {
+    setTop(topPosition => {
+      const requestedPosition = topPosition + (speed || defaultSpeed)
+      return borderCheck(border-(image.height/2), requestedPosition) ? topPosition : requestedPosition
+    })
+  }
+  const moveLeft = (border: number, speed?: number) => {
+    setLeft(leftPosition => {
+      const requestedPosition = leftPosition - (speed || defaultSpeed)
+      return borderCheck(-(border+(image.width/2)), requestedPosition) ? leftPosition : requestedPosition
+    })  }
+
+  const startMovement = (e: React.KeyboardEvent, canvasDimensions: {h: number, w: number}) =>{
     const character = e.key.toLowerCase();
     const speed = movementSpeed || defaultSpeed
+    const { h, w } = canvasDimensions
+    const horizontalBorderValue = (h/2);
+    const verticalBorderValue = (w/2);
     if(character === keys.up){
       if(verticalKeyPressed) return
-      setTopInterval(setInterval(()=>{
-        moveUp(speed)
-        console.log('interval')
-      }, 1))
+      setTopInterval(setInterval(()=>moveUp(verticalBorderValue, speed), 1))
       setVerticalKeyPressed(true)
     }
     if(character === keys.right){
       if(horizontalKeyPressed) return
-      setLeftInterval(setInterval(()=>moveRight(speed), 1))
+      setLeftInterval(setInterval(()=>moveRight(horizontalBorderValue - image.width, speed), 1))
       setHorizontalKeyPressed(true)
     }
     if(character === keys.down){
       if(verticalKeyPressed) return
-      setTopInterval(setInterval(()=>moveDown(speed), 1))
+      setTopInterval(setInterval(()=>moveDown(verticalBorderValue - image.height, speed), 1))
       setVerticalKeyPressed(true)
     }
     if(character === keys.left){
       if(horizontalKeyPressed) return
-      setLeftInterval(setInterval(()=>moveLeft(speed), 1))
+      setLeftInterval(setInterval(()=>moveLeft(horizontalBorderValue, speed), 1))
       setHorizontalKeyPressed(true)
     }
   }
@@ -98,17 +114,44 @@ export function Sprite(props: SpriteProps){
   },[])
 
   return (
-    <div 
-      id="sprite" 
-      className="sprite" 
-      tabIndex={-1} 
-      style={{'position': 'absolute', transform: 'translate(50%, 50%)', 'top': `calc(50% + ${topPosition}px)`, 'left': `calc(50% + ${leftPosition}px`, zIndex: '99'}} 
-      ref={spriteRef as React.RefObject<HTMLDivElement>}
-      onKeyDown={startMovement}
-      onKeyUp={stopMovement}
-      onBlur={()=>spriteRef.current?.focus()}
-    >
-      <img src={image.src} height={image.height} width={image.width} alt="sprite" />
-    </div>
+    <CanvasContext.Consumer>
+      {value=>(
+        <>
+          <div
+            id="coordinates"
+            style={{
+              position: 'fixed',
+              top: '10px',
+              left: '10px',
+              zIndex: '999'
+            }}
+          >
+            X: {leftPosition}&nbsp;
+            Y: {topPosition}
+          </div>
+          <div 
+            id="sprite" 
+            className="sprite" 
+            tabIndex={-1} 
+            style={
+              {
+                'position': 'absolute', 
+                'transform': `translate(calc(50% ), calc(50%))`, 
+                'top': `calc(50% + ${topPosition}px)`, 
+                'left': `calc(50% + ${leftPosition}px`, 
+                'zIndex': '99'
+              }
+            } 
+            ref={spriteRef as React.RefObject<HTMLDivElement>}
+            onKeyDown={(e)=>startMovement(e, value)}
+            onKeyUp={(e)=>stopMovement(e)}
+            onBlur={()=>spriteRef.current?.focus()}
+          >
+            <img src={image.src} height={image.height} width={image.width} alt="sprite" />
+          </div>
+        </>
+      )}
+    </CanvasContext.Consumer>
+    
   )
 }
