@@ -19,7 +19,7 @@ export function Sprite(props: SpriteProps){
 
   const spriteRef = useRef<HTMLElement>();
 
-  const [topPosition, setTop] = useState(0);
+  const [topPosition, setTop] = useState(0-image.height);
   const [topInterval, setTopInterval] = useState<number>();
 
   const [leftPosition, setLeft] = useState(0-image.width);
