@@ -41,7 +41,7 @@ export function Sprite(props: SpriteProps){
   const moveUp = (border: number, speed?: number) => {
     setTop(topPosition => {
       const requestedPosition = topPosition - (speed || defaultSpeed)
-      const fixedBorder = -(border+(verticalBorderSpriteFix))
+      const fixedBorder = -(border+(verticalBorderSpriteFix))-1
       return borderCheck(fixedBorder, requestedPosition) ? topPosition : requestedPosition
     })
   }
@@ -49,20 +49,20 @@ export function Sprite(props: SpriteProps){
     setLeft(leftPosition => {
       const requestedPosition = leftPosition + (speed || defaultSpeed)
       const fixedBorder = border-(horizontalBorderSpriteFix)
-      return borderCheck(fixedBorder, requestedPosition) ? leftPosition : requestedPosition
+      return borderCheck(fixedBorder+1, requestedPosition) ? leftPosition : requestedPosition
     })
   }
   const moveDown = (border: number, speed?: number) => {
     setTop(topPosition => {
       const requestedPosition = topPosition + (speed || defaultSpeed)
-      const fixedBorder = border-(verticalBorderSpriteFix)
+      const fixedBorder = border-(verticalBorderSpriteFix)+1
       return borderCheck(fixedBorder, requestedPosition) ? topPosition : requestedPosition
     })
   }
   const moveLeft = (border: number, speed?: number) => {
     setLeft(leftPosition => {
       const requestedPosition = leftPosition - (speed || defaultSpeed)
-      const fixedBorder = -(border+(horizontalBorderSpriteFix))
+      const fixedBorder = -(border+(horizontalBorderSpriteFix))-1
       return borderCheck(fixedBorder, requestedPosition) ? leftPosition : requestedPosition
     })  }
 
