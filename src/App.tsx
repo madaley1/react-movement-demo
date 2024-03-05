@@ -3,10 +3,12 @@ import './App.css'
 import { Canvas } from './Components/Canvas/Canvas'
 import { Sprite } from './Components/Sprite/Sprite'
 import reactImg from './assets/react.svg'
+import { CenteredComponent } from './Components/CenteredComponent/CenteredComponent'
 
 function App() {
   return (
-    <Canvas h={500} w={500}>
+    <Canvas h={750} w={750}>
+      <CenteredComponent />
       <Sprite
         image={reactImg}
         keys={{

@@ -1,3 +1,5 @@
+import {CanvasContext} from './canvasProvider';
+
 type CanvasProps = {
     h: number,
     w: number,
@@ -7,11 +9,16 @@ type CanvasProps = {
 export function Canvas(props: CanvasProps){
   const { h, w, children } = props;
   return (
-    <div style={{
-      width: `${w}px`,
-      height: `${h}px`
+    <CanvasContext.Provider value={{
+      h,
+      w,
     }}>
-      {children}
-    </div>
+      <div style={{
+        width: `${w}px`,
+        height: `${h}px`
+      }}>
+        {children}
+      </div>
+    </CanvasContext.Provider>
   )
 }
