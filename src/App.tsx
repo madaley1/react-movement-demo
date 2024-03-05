@@ -1,7 +1,7 @@
-import './App.css'
-import { Canvas } from './Components/Canvas/Canvas'
-import { Sprite } from './Components/Sprite/Sprite'
-import reactImg from './assets/react.svg'
+import './App.css';
+import { Canvas } from './Components/Canvas/Canvas';
+import { Sprite } from './Components/Sprite/Sprite';
+import reactImg from './assets/react.svg';
 
 function App() {
   return (
@@ -14,15 +14,15 @@ function App() {
           width: 50
         }}
         keys={{
-          "up": "w",
-          "down": "s",
-          "left": "a",
-          "right": "d"
+          up: 'w',
+          down: 's',
+          left: 'a',
+          right: 'd'
         }}
         movementSpeed={1}
       />
     </Canvas>
-  )
+  );
 }
 
-export default App
+export default App;

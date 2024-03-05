@@ -4,9 +4,16 @@
   },
   "extends": [
     "eslint:recommended",
-    "next",
     "prettier"
   ],
+  "plugins": [
+    "prettier"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "parser": "@typescript-eslint/parser",
   "rules":{
     "strict": "error",
     "no-undef": "warn",
