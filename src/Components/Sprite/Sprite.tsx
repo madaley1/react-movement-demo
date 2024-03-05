@@ -35,28 +35,31 @@ export function Sprite(props: SpriteProps){
     return borderValue === spritePosition
   }
 
+  const verticalBorderSpriteFix = image.height/2;
+  const horizontalBorderSpriteFix = image.width/2;
+
   const moveUp = (border: number, speed?: number) => {
     setTop(topPosition => {
       const requestedPosition = topPosition - (speed || defaultSpeed)
-      return borderCheck(-(border+(image.height/2)), requestedPosition) ? topPosition : requestedPosition
+      return borderCheck(-(border+(verticalBorderSpriteFix)), requestedPosition) ? topPosition : requestedPosition
     })
   }
   const moveRight = (border: number, speed?: number) => {
     setLeft(leftPosition => {
       const requestedPosition = leftPosition + (speed || defaultSpeed)
-      return borderCheck(border-(image.width/2), requestedPosition) ? leftPosition : requestedPosition
+      return borderCheck(border-(horizontalBorderSpriteFix), requestedPosition) ? leftPosition : requestedPosition
     })
   }
   const moveDown = (border: number, speed?: number) => {
     setTop(topPosition => {
       const requestedPosition = topPosition + (speed || defaultSpeed)
-      return borderCheck(border-(image.height/2), requestedPosition) ? topPosition : requestedPosition
+      return borderCheck(border-(verticalBorderSpriteFix), requestedPosition) ? topPosition : requestedPosition
     })
   }
   const moveLeft = (border: number, speed?: number) => {
     setLeft(leftPosition => {
       const requestedPosition = leftPosition - (speed || defaultSpeed)
-      return borderCheck(-(border+(image.width/2)), requestedPosition) ? leftPosition : requestedPosition
+      return borderCheck(-(border+(horizontalBorderSpriteFix)), requestedPosition) ? leftPosition : requestedPosition
     })  }
 
   const startMovement = (e: React.KeyboardEvent, canvasDimensions: {h: number, w: number}) =>{
