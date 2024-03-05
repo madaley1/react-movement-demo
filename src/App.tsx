@@ -1,22 +1,27 @@
 import { useState } from 'react'
 import './App.css'
 import { Canvas } from './Components/Canvas/Canvas'
+import { CenteredComponent } from './Components/CenteredComponent/CenteredComponent'
 import { Sprite } from './Components/Sprite/Sprite'
 import reactImg from './assets/react.svg'
-import { CenteredComponent } from './Components/CenteredComponent/CenteredComponent'
 
 function App() {
   return (
     <Canvas h={750} w={750}>
-      <CenteredComponent />
+      {/* <CenteredComponent /> */}
       <Sprite
-        image={reactImg}
+        image={{
+          src: reactImg,
+          height: 50,
+          width: 50
+        }}
         keys={{
           "up": "w",
           "down": "s",
           "left": "a",
           "right": "d"
         }}
+        movementSpeed={1}
       />
     </Canvas>
   )
