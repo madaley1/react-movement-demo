@@ -19,10 +19,10 @@ export function Sprite(props: SpriteProps){
 
   const spriteRef = useRef<HTMLElement>();
 
-  const [topPosition, setTop] = useState(0-image.height);
+  const [topPosition, setTop] = useState(-image.height);
   const [topInterval, setTopInterval] = useState<number>();
 
-  const [leftPosition, setLeft] = useState(0-image.width);
+  const [leftPosition, setLeft] = useState(-image.width);
   const [leftInterval, setLeftInterval] = useState<number>();
 
   const [verticalKeyPressed, setVerticalKeyPressed] = useState(false);
@@ -102,7 +102,7 @@ export function Sprite(props: SpriteProps){
       id="sprite" 
       className="sprite" 
       tabIndex={-1} 
-      style={{'position': 'absolute', 'top': `calc(50% + ${topPosition}px)`, 'left': `calc(50% + ${leftPosition}px`, zIndex: '99'}} 
+      style={{'position': 'absolute', transform: 'translate(50%, 50%)', 'top': `calc(50% + ${topPosition}px)`, 'left': `calc(50% + ${leftPosition}px`, zIndex: '99'}} 
       ref={spriteRef as React.RefObject<HTMLDivElement>}
       onKeyDown={startMovement}
       onKeyUp={stopMovement}
