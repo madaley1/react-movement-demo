@@ -22,10 +22,10 @@ export function Sprite(props: SpriteProps) {
   const spriteRef = useRef<HTMLElement>();
 
   const [topPosition, setTop] = useState(-image.height);
-  const [topInterval, setTopInterval] = useState<number>();
+  const [topInterval, setTopInterval] = useState<NodeJS.Timeout>();
 
   const [leftPosition, setLeft] = useState(-image.width);
-  const [leftInterval, setLeftInterval] = useState<number>();
+  const [leftInterval, setLeftInterval] = useState<NodeJS.Timeout>();
 
   const [verticalKeyPressed, setVerticalKeyPressed] = useState(false);
   const [horizontalKeyPressed, setHorizontalKeyPressed] = useState(false);
